@@ -2,22 +2,20 @@ package server.GameServer;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import server.Controller.AuthenticationController;
-import server.services.AuthenticationService;
+import server.routers.AuthenticationRouter;
+import server.routers.ChatRouter;
 
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.IOException;
 
 public class GameServer {
-    private static final int PORT = 8080; // Port cho GameServer
-    private ServerSocket serverSocket;
+    private static final int AUTH_PORT = 8081;
+    private static final int CHAT_PORT = 8082;
     private SessionFactory sessionFactory;
 
     public static void main(String[] args) {
         GameServer server = new GameServer();
         server.initializeHibernate();
-        server.start();
+        server.startRouters();
     }
 
     public GameServer() {
@@ -35,63 +33,20 @@ public class GameServer {
         }
     }
 
-    public void start() {
+    public void startRouters() {
         try {
-            serverSocket = new ServerSocket(PORT);
-            System.out.println("GameServer is listening on port " + PORT);
+            // Khởi tạo và bắt đầu AuthenticationRouter
+            AuthenticationRouter authRouter = new AuthenticationRouter(sessionFactory);
+            authRouter.startServer();
 
-            AuthenticationService authService = new AuthenticationService(sessionFactory);
-            AuthenticationController authController = new AuthenticationController(authService);
+            // Khởi tạo và bắt đầu ChatRouter
+            ChatRouter chatRouter = new ChatRouter();
+            chatRouter.startServer();
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                handleClientConnection(clientSocket, authController);
-            }
+            System.out.println("All routers started successfully.");
+
         } catch (IOException e) {
-            System.err.println("Exception caught when trying to listen on port " + PORT + " or listening for a connection: " + e.getMessage());
-        } finally {
-            closeServerSocket();
-        }
-    }
-
-    private void handleClientConnection(Socket clientSocket, AuthenticationController authController) {
-        new Thread(() -> {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    if (inputLine.equalsIgnoreCase("logout")) {
-                        authController.handleLogout(null); // Call logout handler
-                        out.println("Logout successful!");
-                    } else {
-                        out.println("Unknown command: " + inputLine);
-                    }
-                }
-            } catch (IOException e) {
-                System.err.println("Exception in handling client connection: " + e.getMessage());
-            } finally {
-                closeClientSocket(clientSocket);
-            }
-        }).start();
-    }
-
-    private void closeServerSocket() {
-        if (serverSocket != null && !serverSocket.isClosed()) {
-            try {
-                serverSocket.close();
-            } catch (IOException e) {
-                System.err.println("Failed to close server socket: " + e.getMessage());
-            }
-        }
-    }
-
-    private void closeClientSocket(Socket socket) {
-        if (socket != null && !socket.isClosed()) {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                System.err.println("Could not close client socket: " + e.getMessage());
-            }
+            System.err.println("Exception caught when trying to start routers: " + e.getMessage());
         }
     }
 }

@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.module.Configuration;
 import java.net.InetSocketAddress;
 
 public class AuthenticationRouter implements HttpHandler {
@@ -24,7 +23,7 @@ public class AuthenticationRouter implements HttpHandler {
     public void startServer() throws IOException {
         server = HttpServer.create(new InetSocketAddress(8081), 0); // Đổi cổng nếu cần
         server.createContext("/api/auth", this);
-        server.setExecutor(null); // Sử dụng executor mặc định
+        server.setExecutor(null);
         server.start();
         System.out.println("Authentication server started on port 8081");
     }
@@ -57,6 +56,13 @@ public class AuthenticationRouter implements HttpHandler {
                         sendResponse(exchange, 405, "Method Not Allowed");
                     }
                     break;
+//                case "/api/auth/updateSkin":
+//                    if ("POST".equalsIgnoreCase(method)) {
+//                        authController.handleUpdateSkin(exchange);
+//                    } else {
+//                        sendResponse(exchange, 405, "Method Not Allowed");
+//                    }
+//                    break;
                 default:
                     sendResponse(exchange, 404, "Not Found");
             }
@@ -72,7 +78,4 @@ public class AuthenticationRouter implements HttpHandler {
             os.write(response.getBytes());
         }
     }
-
-    // Phương thức main để chạy độc lập cho mục đích kiểm thử
-
 }
