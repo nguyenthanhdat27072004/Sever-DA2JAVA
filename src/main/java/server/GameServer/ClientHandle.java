@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import server.Controller.ForgetController;
 import server.Controller.LoginController;
 import server.Controller.RegisterController;
+import server.Controller.ScoreController;
 import server.ObjectGson.GsonForClient.CL_Request;
 import util.StreamSocket;
 
@@ -55,6 +56,27 @@ public class ClientHandle {
                         e.printStackTrace();
                     }
                     break;
+                }
+                case "/get/rank/score":{
+                    try{
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                case "/get/score/of/user":{
+                    try {
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                case "/update/score":{
+                    try {
+                        ScoreController.updateScore(socket);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 default:
                     break;

@@ -1,6 +1,5 @@
 package server.Controller;
 
-import DAO.RankDAO;
 import DAO.ScoreDAO;
 import DAO.SkinDAO;
 import DAO.UserDAO;
@@ -21,9 +20,8 @@ public class RegisterController {
         try {
             // thuc hien luu tai khoan moi len database
             int idUser = UserDAO.registerAccount(cl_registerInformation);
-            RankDAO.newUser(idUser);
-            ScoreDAO.newUser(idUser);
-            SkinDAO.newUser(idUser);
+                ScoreDAO.newUser(idUser);
+                SkinDAO.newUser(idUser);
             // gui thong tin dang ky ve cho client
             SV_Check sv_check = new SV_Check(true);
             new StreamSocket<SV_Check>().sendDataToCLient(socket, sv_check);
