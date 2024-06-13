@@ -94,6 +94,14 @@ public class ClientHandle {
                     }
                     break;
                 }
+                case "/get/rank/skin":{
+                    try {
+                        SkinController.getSkinForRank(socket);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                }
                 default:
                     break;
             }

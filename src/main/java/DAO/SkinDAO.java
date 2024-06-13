@@ -6,8 +6,8 @@ import org.hibernate.query.Query;
 import server.ObjectGson.GsonForClient.CL_CheckLogin;
 import server.ObjectGson.GsonForServer.*;
 import util.HibernateUtil;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 public class SkinDAO {
     public static void newUser(int idUser){
@@ -89,5 +89,39 @@ public class SkinDAO {
         }
         return sv_getSkin;
     }
+    public static SV_ListGetSkin getSkinForRank(SV_ListUserInfor sv_listUserInfor) {
+        SV_ListGetSkin sv_listGetSkin = new SV_ListGetSkin();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // lay danh sach id de code gon hon
+            List<Integer> skinIds = new ArrayList<>();
+            for (SV_UserInfor userInfor : sv_listUserInfor.getListUserInfor()) {
+                skinIds.add(userInfor.getIdSkin());
+            }
+            //query truy van
+            Query<SV_Skin> query = session.createQuery("FROM SV_Skin WHERE idskin IN (:ids)", SV_Skin.class);
+            query.setParameterList("ids", skinIds);
+
+            List<SV_Skin> skins = query.getResultList();
+            List<SV_GetSkin> getSkins = new ArrayList<>();
+
+            // duyet qua cac id va lay skin tuong ung
+            for (Integer id : skinIds) {
+                for (SV_Skin skin : skins) {
+                    if (skin.getIdskin() == id) {
+                        SV_GetSkin sv_getSkin = new SV_GetSkin();
+                        sv_getSkin.setSkinBird(skin.getSkin());
+                        getSkins.add(sv_getSkin);
+                        break;
+                    }
+                }
+            }
+            sv_listGetSkin.setListGetSkin(new ArrayList<>(getSkins.subList(0, Math.min(getSkins.size(), 3))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sv_listGetSkin;
+    }
+
+
 
 }

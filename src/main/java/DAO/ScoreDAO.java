@@ -20,7 +20,6 @@ public class ScoreDAO {
             SV_Score score = new SV_Score();
             score.setUserId(userId);
             score.setScore("0");
-            score.setSv_userInfor(sv_userInfor);
 
 
             session.save(score);
@@ -49,7 +48,7 @@ public class ScoreDAO {
     public static SV_ListScore getTop3Scores(){
         SV_ListScore sv_listScore = new SV_ListScore();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<SV_Score> query = session.createQuery("from SV_Score order by score desc", SV_Score.class);
+            Query<SV_Score> query = session.createQuery("from SV_Score order by CAST(score AS integer) desc", SV_Score.class);
             query.setMaxResults(3);
 
             List<SV_Score> resultList = query.list();

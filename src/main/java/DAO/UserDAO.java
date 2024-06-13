@@ -6,12 +6,14 @@ import org.hibernate.query.Query;
 import server.Controller.HashController;
 import server.ObjectGson.GsonForClient.CL_ChangePass;
 import server.ObjectGson.GsonForClient.CL_RegisterInformation;
+import server.ObjectGson.GsonForServer.SV_ListScore;
 import server.ObjectGson.GsonForServer.SV_ListUserInfor;
 import server.ObjectGson.GsonForServer.SV_User;
 import server.ObjectGson.GsonForServer.SV_UserInfor;
 import util.HibernateUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserDAO {
@@ -80,16 +82,15 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    public static SV_ListUserInfor getTop3UserInfor() {
+    public static SV_ListUserInfor getTop3UserInfor(SV_ListScore sv_listScore) {
         SV_ListUserInfor sv_listUserInfor = new SV_ListUserInfor();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // Truy vấn HQL để lấy thông tin người dùng và điểm số, sắp xếp theo điểm số giảm dần
-            String hql = "SELECT u FROM SV_UserInfor u JOIN u.sv_scores s ORDER BY s.score DESC";
-            Query<SV_UserInfor> query = session.createQuery(hql, SV_UserInfor.class);
-            query.setMaxResults(3);
-
+            Query<SV_UserInfor> query = session.createQuery("FROM SV_UserInfor WHERE userId IN (:userIds)", SV_UserInfor.class);
+            query.setParameter("userIds", Arrays.asList(sv_listScore.getListScore().get(0).getUserId(),
+                                                            sv_listScore.getListScore().get(1).getUserId(),
+                                                            sv_listScore.getListScore().get(2).getUserId()));
             // Lấy danh sách kết quả
-            List<SV_UserInfor> resultList = query.list();
+            List<SV_UserInfor> resultList = query.getResultList();
             sv_listUserInfor.setListUserInfor(new ArrayList<>(resultList));
 
         } catch (Exception e) {

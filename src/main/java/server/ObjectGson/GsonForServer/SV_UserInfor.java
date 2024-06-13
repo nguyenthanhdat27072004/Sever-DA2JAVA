@@ -16,9 +16,6 @@ public class SV_UserInfor {
     @Column(name = "idSkin", nullable = false)
     private int idSkin;
 
-    @OneToMany(mappedBy = "sv_userInfor")
-    private Set<SV_Score> sv_scores;
-
     public SV_UserInfor(int userId, String username, int idSkin) {
         this.userId = userId;
         this.username = username;
@@ -51,6 +48,7 @@ public class SV_UserInfor {
     public void setIdSkin(int idSkin) {
         this.idSkin = idSkin;
     }
+
 
     @Override
     public String toString() {

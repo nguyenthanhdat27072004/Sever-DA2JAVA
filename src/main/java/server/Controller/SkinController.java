@@ -1,10 +1,11 @@
 package server.Controller;
 
+import DAO.ScoreDAO;
 import DAO.SkinDAO;
+import DAO.UserDAO;
 import com.google.gson.Gson;
 import server.ObjectGson.GsonForClient.CL_CheckLogin;
-import server.ObjectGson.GsonForServer.SV_GetSkin;
-import server.ObjectGson.GsonForServer.SV_SkinOfUser;
+import server.ObjectGson.GsonForServer.*;
 import util.StreamSocket;
 
 import java.net.Socket;
@@ -30,5 +31,12 @@ public class SkinController {
         SV_SkinOfUser sv_skinOfUser = SkinDAO.getIdSkinOfUser(cl_checkLogin);
         SV_GetSkin sv_getSkin = SkinDAO.getSkin(sv_skinOfUser);
         new StreamSocket<SV_GetSkin>().sendDataToCLient(socket, sv_getSkin);
+    }
+    public static void getSkinForRank(Socket socket){
+        //gui du lieu cho client
+        SV_ListScore sv_listScore = ScoreDAO.getTop3Scores();
+        SV_ListUserInfor sv_listUserInfor = UserDAO.getTop3UserInfor(sv_listScore);
+        SV_ListGetSkin sv_listGetSkin = SkinDAO.getSkinForRank(sv_listUserInfor);
+        new StreamSocket<SV_ListGetSkin>().sendDataToCLient(socket, sv_listGetSkin);
     }
 }
