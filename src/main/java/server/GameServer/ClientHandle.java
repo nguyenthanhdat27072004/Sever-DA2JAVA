@@ -102,6 +102,14 @@ public class ClientHandle {
                     }
                     break;
                 }
+                case "/update/message":{
+                    try {
+                        MessageController.UpdateMessage(socket);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                }
                 default:
                     break;
             }
