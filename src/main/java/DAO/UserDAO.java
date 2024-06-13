@@ -97,4 +97,17 @@ public class UserDAO {
         }
         return sv_listUserInfor;
     }
+    public static SV_UserInfor getUserInforById(int userId) {
+        SV_UserInfor sv_userInfor = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<SV_UserInfor> query = session.createQuery("FROM SV_UserInfor WHERE userId = :userId", SV_UserInfor.class);
+            query.setParameter("userId", userId);
+
+            // Thực hiện truy vấn và lấy kết quả
+            sv_userInfor = query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sv_userInfor;
+    }
 }

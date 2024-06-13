@@ -40,11 +40,20 @@ public class SV_Score {
         this.score = score;
     }
 
+    public SV_UserInfor getSv_userInfor() {
+        return sv_userInfor;
+    }
+
+    public void setSv_userInfor(SV_UserInfor sv_userInfor) {
+        this.sv_userInfor = sv_userInfor;
+    }
+
     @Override
     public String toString() {
         return "SV_Score{" +
                 "userId=" + userId +
                 ", score='" + score + '\'' +
+                ", sv_userInfor=" + sv_userInfor +
                 '}';
     }
 }

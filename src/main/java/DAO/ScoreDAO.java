@@ -6,19 +6,23 @@ import org.hibernate.query.Query;
 import server.ObjectGson.GsonForClient.CL_IdUser;
 import server.ObjectGson.GsonForServer.SV_ListScore;
 import server.ObjectGson.GsonForServer.SV_Score;
+import server.ObjectGson.GsonForServer.SV_UserInfor;
 import util.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreDAO {
-    public static void newUser(int userId){
+    public static void newUser(int userId, SV_UserInfor sv_userInfor){
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
 
             SV_Score score = new SV_Score();
             score.setUserId(userId);
             score.setScore("0");
+            score.setSv_userInfor(sv_userInfor);
+
+
             session.save(score);
 
             transaction.commit();

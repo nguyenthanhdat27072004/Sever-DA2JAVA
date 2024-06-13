@@ -7,7 +7,7 @@ import java.util.Set;
 @Table(name = "userinformation")
 public class SV_UserInfor {
     @Id
-    @Column(name = "idUser")
+    @Column(name = "userId")
     private int userId;
 
     @Column(name = "username", nullable = false)
