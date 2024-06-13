@@ -20,4 +20,12 @@ public class MessageController {
         SV_Message svMessage = gson.fromJson(StreamSocket.readGsonFromClient(socket), SV_Message.class);
         MessageDAO.updateMess(svMessage);
     }
+    public static void GetAllMessage(Socket socket){
+        // ket noi
+        StreamSocket.checkConnect(socket);
+        Gson gson = new Gson();
+        // doc du lieu de update
+        SV_Message svMessage = gson.fromJson(StreamSocket.readGsonFromClient(socket), SV_Message.class);
+        MessageDAO.getAllMessage();
+    }
 }

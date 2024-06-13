@@ -110,6 +110,14 @@ public class ClientHandle {
                     }
                     break;
                 }
+                case "/get/all/message":{
+                    try {
+                        MessageController.GetAllMessage(socket);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                }
                 default:
                     break;
             }
