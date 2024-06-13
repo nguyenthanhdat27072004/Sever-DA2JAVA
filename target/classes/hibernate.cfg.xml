@@ -31,9 +31,9 @@
         <mapping class="server.ObjectGson.GsonForServer.SV_User"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_Score"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_Message"/>
-        <mapping class="server.ObjectGson.GsonForServer.SV_Rank"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_SkinOfUser"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_Skin"/>
+        <mapping class="server.ObjectGson.GsonForServer.SV_UserInfor"/>
 
     </session-factory>
 </hibernate-configuration>
