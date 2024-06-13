@@ -2,6 +2,7 @@ package server.Controller;
 
 import DAO.ScoreDAO;
 import com.google.gson.Gson;
+import server.ObjectGson.GsonForServer.SV_ListScore;
 import server.ObjectGson.GsonForServer.SV_Score;
 import util.StreamSocket;
 
@@ -21,4 +22,10 @@ public class ScoreController {
             ScoreDAO.updateScores(fromClient);
         }
     }
+    public static void getTop3Scores(Socket socket){
+        //gui du lieu di
+        SV_ListScore sv_listScore = ScoreDAO.getTop3Scores();
+        new StreamSocket<SV_ListScore>().sendDataToCLient(socket, sv_listScore);
+    }
+
 }

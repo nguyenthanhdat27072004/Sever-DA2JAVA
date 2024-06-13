@@ -6,24 +6,15 @@ import org.hibernate.query.Query;
 import server.Controller.HashController;
 import server.ObjectGson.GsonForClient.CL_ChangePass;
 import server.ObjectGson.GsonForClient.CL_RegisterInformation;
+import server.ObjectGson.GsonForServer.SV_ListUserInfor;
 import server.ObjectGson.GsonForServer.SV_User;
+import server.ObjectGson.GsonForServer.SV_UserInfor;
 import util.HibernateUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-    public static List<SV_User> allUser(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            Query<SV_User> query = session.createQuery("from SV_User", SV_User.class);
-            return query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of(); // tra ve danh sach rong neu co ngoai le
-        } finally {
-            session.close();
-        }
-    }
     public static int registerAccount(CL_RegisterInformation cl_registerInformation){
         int idUser = 0;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -44,6 +35,21 @@ public class UserDAO {
             e.printStackTrace();
         }
         return idUser;
+    }
+    public static void newInforUser(int idUser, CL_RegisterInformation cl_registerInformation){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+            SV_UserInfor svUserInfor = new SV_UserInfor();
+            //set du lieu
+            svUserInfor.setUserId(idUser);
+            svUserInfor.setUsername(cl_registerInformation.getUsername());
+            svUserInfor.setIdSkin(1);
+
+            session.save(svUserInfor);
+            transaction.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public static String getMailByUsername(String username){
         String email = null;
@@ -73,5 +79,22 @@ public class UserDAO {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public static SV_ListUserInfor getTop3UserInfor() {
+        SV_ListUserInfor sv_listUserInfor = new SV_ListUserInfor();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // Truy vấn HQL để lấy thông tin người dùng và điểm số, sắp xếp theo điểm số giảm dần
+            String hql = "SELECT u FROM SV_UserInfor u JOIN u.sv_scores s ORDER BY s.score DESC";
+            Query<SV_UserInfor> query = session.createQuery(hql, SV_UserInfor.class);
+            query.setMaxResults(3);
+
+            // Lấy danh sách kết quả
+            List<SV_UserInfor> resultList = query.list();
+            sv_listUserInfor.setListUserInfor(new ArrayList<>(resultList));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sv_listUserInfor;
     }
 }

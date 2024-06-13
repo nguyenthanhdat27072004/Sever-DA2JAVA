@@ -22,6 +22,7 @@ public class RegisterController {
             int idUser = UserDAO.registerAccount(cl_registerInformation);
                 ScoreDAO.newUser(idUser);
                 SkinDAO.newUser(idUser);
+                UserDAO.newInforUser(idUser,cl_registerInformation);
             // gui thong tin dang ky ve cho client
             SV_Check sv_check = new SV_Check(true);
             new StreamSocket<SV_Check>().sendDataToCLient(socket, sv_check);

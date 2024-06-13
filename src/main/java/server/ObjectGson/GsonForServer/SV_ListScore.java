@@ -9,6 +9,9 @@ public class SV_ListScore {
         this.listScore = listScore;
     }
 
+    public SV_ListScore() {
+    }
+
     public ArrayList<SV_Score> getListScore() {
         return listScore;
     }

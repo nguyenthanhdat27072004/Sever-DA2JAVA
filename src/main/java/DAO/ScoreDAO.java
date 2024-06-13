@@ -8,6 +8,7 @@ import server.ObjectGson.GsonForServer.SV_ListScore;
 import server.ObjectGson.GsonForServer.SV_Score;
 import util.HibernateUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreDAO {
@@ -42,12 +43,13 @@ public class ScoreDAO {
     }
 
     public static SV_ListScore getTop3Scores(){
-        SV_ListScore sv_listScore = null;
+        SV_ListScore sv_listScore = new SV_ListScore();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<SV_Score> query = session.createQuery("from SV_Score order by score desc", SV_Score.class);
             query.setMaxResults(3);
 
-            sv_listScore = (SV_ListScore) query.list();
+            List<SV_Score> resultList = query.list();
+            sv_listScore.setListScore(new ArrayList<>(resultList));
         } catch (Exception e){
             e.printStackTrace();
         }

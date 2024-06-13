@@ -1,10 +1,7 @@
 package server.GameServer;
 
 import com.google.gson.Gson;
-import server.Controller.ForgetController;
-import server.Controller.LoginController;
-import server.Controller.RegisterController;
-import server.Controller.ScoreController;
+import server.Controller.*;
 import server.ObjectGson.GsonForClient.CL_Request;
 import util.StreamSocket;
 
@@ -59,14 +56,14 @@ public class ClientHandle {
                 }
                 case "/get/rank/score":{
                     try{
-
+                        ScoreController.getTop3Scores(socket);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                 }
-                case "/get/score/of/user":{
+                case "/get/rank/username":{
                     try {
-
+                        UserController.getTop3User(socket);
                     }catch (Exception e){
                         e.printStackTrace();
                     }

@@ -33,6 +33,7 @@
         <mapping class="server.ObjectGson.GsonForServer.SV_Message"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_SkinOfUser"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_Skin"/>
+        <mapping class="server.ObjectGson.GsonForServer.SV_UserInfor"/>
 
     </session-factory>
 </hibernate-configuration>

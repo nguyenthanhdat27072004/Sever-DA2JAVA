@@ -12,6 +12,10 @@ public class SV_Score {
     @Column(name = "score", nullable = false)
     private String score;
 
+    @ManyToOne
+    @JoinColumn(name = "idUser")
+    private SV_UserInfor sv_userInfor;
+
     public SV_Score() {
     }
 
