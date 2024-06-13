@@ -34,10 +34,10 @@ public class ScoreDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
 
-            SV_Score score = new SV_Score();
-            score.setUserId(score.getUserId());
-            score.setScore(score.getScore());
-            session.save(score);
+            SV_Score score = session.get(SV_Score.class, sv_score.getUserId());
+
+            score.setScore(sv_score.getScore());
+            session.update(score);
 
             transaction.commit();
 

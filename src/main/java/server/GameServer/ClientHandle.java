@@ -75,6 +75,13 @@ public class ClientHandle {
                         e.printStackTrace();
                     }
                 }
+                case "/update/skin":{
+                    try {
+                        SkinController.updateSkin(socket);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 default:
                     break;
             }
