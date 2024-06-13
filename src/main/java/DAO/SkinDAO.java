@@ -3,10 +3,11 @@ package DAO;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import server.ObjectGson.GsonForServer.SV_Score;
-import server.ObjectGson.GsonForServer.SV_SkinOfUser;
-import server.ObjectGson.GsonForServer.SV_UserInfor;
+import server.ObjectGson.GsonForClient.CL_CheckLogin;
+import server.ObjectGson.GsonForServer.*;
 import util.HibernateUtil;
+import java.util.Arrays;
+import java.util.List;
 
 public class SkinDAO {
     public static void newUser(int idUser){
@@ -61,6 +62,32 @@ public class SkinDAO {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public static SV_SkinOfUser getIdSkinOfUser(CL_CheckLogin cl_checkLogin){
+        SV_SkinOfUser sv_skinOfUser = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<SV_SkinOfUser> query = session.createQuery("from SV_SkinOfUser where userId = :idUser", SV_SkinOfUser.class);
+            query.setParameter("idUser",cl_checkLogin.getIdUser());
+
+            sv_skinOfUser = query.uniqueResult();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return sv_skinOfUser;
+    }
+    public static SV_GetSkin getSkin(SV_SkinOfUser sv_skinOfUser){
+        SV_GetSkin sv_getSkin = new SV_GetSkin();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<SV_Skin> query = session.createQuery("from SV_Skin where idskin in (:ids)", SV_Skin.class);
+            query.setParameter("ids", Arrays.asList(Integer.parseInt(sv_skinOfUser.getBirdSkin()),Integer.parseInt(sv_skinOfUser.getPipeSkin())));
+
+            List<SV_Skin> skins = query.getResultList();
+            sv_getSkin.setSkinBird(skins.get(0).getSkin());
+            sv_getSkin.setSkinPipe(skins.get(1).getSkin());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return sv_getSkin;
     }
 
 }

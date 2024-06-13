@@ -60,6 +60,7 @@ public class ClientHandle {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
                 }
                 case "/get/rank/username":{
                     try {
@@ -67,6 +68,7 @@ public class ClientHandle {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
                 }
                 case "/update/score":{
                     try {
@@ -74,6 +76,7 @@ public class ClientHandle {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
                 }
                 case "/update/skin":{
                     try {
@@ -81,6 +84,15 @@ public class ClientHandle {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    break;
+                }
+                case "/get/skin/of/user":{
+                    try {
+                        SkinController.getSkinOfUser(socket);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
                 }
                 default:
                     break;
