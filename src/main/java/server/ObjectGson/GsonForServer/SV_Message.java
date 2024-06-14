@@ -10,9 +10,18 @@ public class SV_Message {
     @Column(name = "idMess")
     private int idMess;
     @Column(name = "userId")
-    private int userID;
+    private int userId;
     @Column(name = "content")
     private String content;
+
+    public SV_Message(int idMess, int userId, String content) {
+        this.idMess = idMess;
+        this.userId = userId;
+        this.content = content;
+    }
+
+    public SV_Message() {
+    }
 
     public int getIdMess() {
         return idMess;
@@ -22,27 +31,17 @@ public class SV_Message {
         this.idMess = idMess;
     }
 
-    public SV_Message (int userID, int idMess, String content){
-        this.content= content;
-        this.idMess= idMess;
-        this.userID=userID;
-    }
-
-
-    public SV_Message() {
-
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
 
     public String getContent() {
         return content;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setContent(String content) {
@@ -53,7 +52,7 @@ public class SV_Message {
     public String toString() {
         return "SV_Message{" +
                 "idMess=" + idMess +
-                ", userID=" + userID +
+                ", userId=" + userId +
                 ", content='" + content + '\'' +
                 '}';
     }

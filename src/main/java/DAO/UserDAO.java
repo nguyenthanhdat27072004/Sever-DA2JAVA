@@ -87,8 +87,8 @@ public class UserDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<SV_UserInfor> query = session.createQuery("FROM SV_UserInfor WHERE userId IN (:userIds)", SV_UserInfor.class);
             query.setParameter("userIds", Arrays.asList(sv_listScore.getListScore().get(0).getUserId(),
-                                                            sv_listScore.getListScore().get(1).getUserId(),
-                                                            sv_listScore.getListScore().get(2).getUserId()));
+                    sv_listScore.getListScore().get(1).getUserId(),
+                    sv_listScore.getListScore().get(2).getUserId()));
             // Lấy danh sách kết quả
             List<SV_UserInfor> resultList = query.getResultList();
             sv_listUserInfor.setListUserInfor(new ArrayList<>(resultList));
@@ -110,5 +110,17 @@ public class UserDAO {
             e.printStackTrace();
         }
         return sv_userInfor;
+    }
+    public static SV_ListUserInfor getAllUser(){
+        SV_ListUserInfor sv_listUserInfor = new SV_ListUserInfor();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<SV_UserInfor> query = session.createQuery("from SV_UserInfor", SV_UserInfor.class);
+            List<SV_UserInfor> list = query.getResultList();
+
+            sv_listUserInfor.setListUserInfor(new ArrayList<>(list));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sv_listUserInfor;
     }
 }

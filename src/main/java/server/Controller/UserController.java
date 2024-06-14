@@ -15,4 +15,7 @@ public class UserController {
         SV_ListUserInfor sv_listUserInfor = UserDAO.getTop3UserInfor(sv_listScore);
         new StreamSocket<SV_ListUserInfor>().sendDataToCLient(socket,sv_listUserInfor);
     }
+    public static void getAllUser(Socket socket){
+        new StreamSocket<SV_ListUserInfor>().sendDataToCLient(socket, UserDAO.getAllUser());
+    }
 }

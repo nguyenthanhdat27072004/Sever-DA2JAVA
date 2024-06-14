@@ -13,21 +13,26 @@ import java.util.List;
 
 public class MessageDAO {
     public static SV_ListMessage getAllMessage(){
-        SV_ListMessage svListMessage = new SV_ListMessage();
-
+        SV_ListMessage sv_listMessage = new SV_ListMessage();
         try(Session session= HibernateUtil.getSessionFactory().openSession()) {
             Query<SV_Message> query = session.createQuery("from SV_Message ", SV_Message.class);
-            List <SV_Message> list = query.getResultList();
-            svListMessage.setListMessages(new ArrayList<>(list));
+            List <SV_Message> list = query.list();
+
+            sv_listMessage.setListMess(new ArrayList<>(list));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return svListMessage;
+        return sv_listMessage;
     }
     public static void updateMess(SV_Message svMessage){
         try(Session session= HibernateUtil.getSessionFactory().openSession()){
             Transaction transaction= session.beginTransaction();
-            session.update(svMessage);
+
+            SV_Message sv_message = new SV_Message();
+            sv_message.setContent(svMessage.getContent());
+            sv_message.setUserId(svMessage.getUserId());
+            session.save(sv_message);
+
             transaction.commit();
         }
         catch (Exception e){

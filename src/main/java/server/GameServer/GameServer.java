@@ -3,29 +3,34 @@ package server.GameServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameServer {
     private ServerSocket serverSocket;
     private int port = 5525;
+    private ExecutorService executorService;
 
-    public GameServer() throws IOException{
-        //tao sever socket
+    public GameServer() throws IOException {
+        // Tạo server socket
         serverSocket = new ServerSocket(port);
-        System.out.println("Server open port: "+port);
+        System.out.println("Server open port: " + port);
 
-        //lap vo han de accept client
-        while (true){
+        // Khởi tạo ExecutorService với một thread pool động
+        executorService = Executors.newCachedThreadPool();
+
+        // Lặp vô hạn để accept client
+        while (true) {
             Socket socket = serverSocket.accept();
             System.out.println("Accept connect a Client!");
 
-            //thuc thi request o 1 luong rieng biet
-            Thread threadClient = new Thread(new Runnable() {
+            // Gửi công việc xử lý request tới ExecutorService
+            executorService.submit(new Runnable() {
                 @Override
                 public void run() {
                     ClientHandle.ExecuteClientRequest(socket);
                 }
             });
-            threadClient.start();
         }
     }
 

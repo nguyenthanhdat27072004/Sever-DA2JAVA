@@ -3,30 +3,27 @@ package server.ObjectGson.GsonForServer;
 import java.util.ArrayList;
 
 public class SV_ListMessage {
-    public SV_ListMessage(ArrayList<SV_Message> listMessages) {
-        ListMessages = listMessages;
+    private ArrayList<SV_Message> listMess = new ArrayList<>();
+
+    public SV_ListMessage(ArrayList<SV_Message> listMess) {
+        this.listMess = listMess;
     }
-
-
-    private ArrayList<SV_Message > ListMessages = new ArrayList<>();
-
 
     public SV_ListMessage() {
-
     }
 
-    public ArrayList<SV_Message> getListMessages() {
-        return ListMessages;
+    public ArrayList<SV_Message> getListMess() {
+        return listMess;
     }
 
-    public void setListMessages(ArrayList<SV_Message> listMessages) {
-        ListMessages = listMessages;
+    public void setListMess(ArrayList<SV_Message> listMess) {
+        this.listMess = listMess;
     }
 
     @Override
     public String toString() {
         return "SV_ListMessage{" +
-                "ListMessages=" + ListMessages +
+                "listMess=" + listMess +
                 '}';
     }
 }
