@@ -127,6 +127,22 @@ public class ClientHandle {
                         }
                         break;
                     }
+                    case "/update/level":{
+                        try {
+                            SettingController.updateLevel(socket);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                    case "/get/level":{
+                        try{
+                            SettingController.getLevel(socket);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
                     default:
                         break;
                 }

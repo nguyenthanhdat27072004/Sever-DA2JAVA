@@ -4,6 +4,7 @@ import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import server.ObjectGson.GsonForClient.CL_IdUser;
 import server.ObjectGson.GsonForServer.SV_Level;
 import server.ObjectGson.GsonForServer.SV_Score;
 import server.ObjectGson.GsonForServer.SV_Sound;
@@ -64,11 +65,11 @@ public class SettingDAO {
         }
     }
 
-    public static SV_Sound getSound( int idUser){
+    public static SV_Sound getSound(CL_IdUser cl_idUser){
         SV_Sound sv_sound = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<SV_Sound> query = session.createQuery("Select * from SV_Sound where idUser = : idUser  ", SV_Sound.class);
-            query.setParameter("idUser", idUser);
+            Query<SV_Sound> query = session.createQuery("from SV_Sound where idUser = : idUser  ", SV_Sound.class);
+            query.setParameter("idUser", cl_idUser.getIdUser());
             sv_sound = query.uniqueResult();
 
         } catch (Exception e){
@@ -77,11 +78,11 @@ public class SettingDAO {
         return sv_sound;
     }
 
-    public static SV_Level getLevel( int idUser){
+    public static SV_Level getLevel(CL_IdUser cl_idUser){
         SV_Level sv_level = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<SV_Level> query = session.createQuery("Select * from SV_Level where idUser = : idUser  ", SV_Level.class);
-            query.setParameter("idUser", idUser);
+            Query<SV_Level> query = session.createQuery("from SV_Level where idUser = : idUser  ", SV_Level.class);
+            query.setParameter("idUser", cl_idUser.getIdUser());
             sv_level = query.uniqueResult();
 
         } catch (Exception e){

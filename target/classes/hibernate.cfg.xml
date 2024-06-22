@@ -34,6 +34,8 @@
         <mapping class="server.ObjectGson.GsonForServer.SV_SkinOfUser"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_Skin"/>
         <mapping class="server.ObjectGson.GsonForServer.SV_UserInfor"/>
+        <mapping class="server.ObjectGson.GsonForServer.SV_Sound"/>
+        <mapping class="server.ObjectGson.GsonForServer.SV_Level"/>
 
     </session-factory>
 </hibernate-configuration>
