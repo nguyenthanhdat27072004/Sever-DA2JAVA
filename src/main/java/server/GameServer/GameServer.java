@@ -25,12 +25,7 @@ public class GameServer {
             System.out.println("Accept connect a Client!");
 
             // Gửi công việc xử lý request tới ExecutorService
-            executorService.submit(new Runnable() {
-                @Override
-                public void run() {
-                    ClientHandle.ExecuteClientRequest(socket);
-                }
-            });
+            executorService.execute(() -> ClientHandle.ExecuteClientRequest(socket));
         }
     }
 
