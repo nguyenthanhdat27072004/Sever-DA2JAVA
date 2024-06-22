@@ -1,12 +1,17 @@
 package server.ObjectGson.GsonForServer;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "level")
 public class SV_Level {
+    @Id
+    @Column(name = "idUser")
     private int idUser;
+    @Column(name = "level")
     private int level;
 
     public SV_Level() {

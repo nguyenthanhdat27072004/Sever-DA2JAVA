@@ -1,6 +1,7 @@
 package server.Controller;
 
 import DAO.ScoreDAO;
+import DAO.SettingDAO;
 import DAO.SkinDAO;
 import DAO.UserDAO;
 import com.google.gson.Gson;
@@ -25,6 +26,8 @@ public class RegisterController {
                 SV_UserInfor sv_userInfor = UserDAO.getUserInforById(idUser);
                 ScoreDAO.newUser(idUser,sv_userInfor);
                 SkinDAO.newUser(idUser);
+                SettingDAO.newAccount(idUser);
+                SettingDAO.newLevel(idUser);
             // gui thong tin dang ky ve cho client
             SV_Check sv_check = new SV_Check(true);
             new StreamSocket<SV_Check>().sendDataToCLient(socket, sv_check);
