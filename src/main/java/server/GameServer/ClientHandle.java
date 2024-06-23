@@ -143,6 +143,22 @@ public class ClientHandle {
                         }
                         break;
                     }
+                    case "/update/sound":{
+                        try {
+                            SettingController.updateSound(socket);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                    case "/get/sound": {
+                        try{
+                            SettingController.getSound(socket);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
                     default:
                         break;
                 }
